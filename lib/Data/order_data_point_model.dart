@@ -84,7 +84,8 @@ class OrderDataPointModel extends Model<OrderDataPointModel> {
       unAggregatedItemsCount:
           mapReader.read<int>(_FieldNames.unAggregatedItemsCount),
       phoneNumber: mapReader.read<String>(_FieldNames.phoneNumber),
-      id: mapReader.read<Guid>(idFieldName),
+      id: mapReader.read<Guid>(idFieldName,
+          valueIfKeyMissing: Guid.defaultValue),
     );
   }
 
