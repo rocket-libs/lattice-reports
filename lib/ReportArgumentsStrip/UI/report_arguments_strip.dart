@@ -3,6 +3,7 @@ import 'package:lattice_reports/AppMultiselect/check_box_dialog.dart';
 import 'package:lattice_reports/Authentication/Messaging/authentication_messenger.dart';
 import 'package:lattice_reports/Data/report_argument_model.dart';
 import 'package:lattice_reports/NonNullable/non_nullable_extensions.dart';
+import 'package:lattice_reports/ReportArgumentsStrip/Data/report_arguments_strip_permissions.dart';
 import 'package:lattice_reports/UI/date_range_picker.dart';
 import 'package:lattice_reports/VendorLocations/Data/vendor_location_model.dart';
 import 'package:lattice_reports/lattice_reports_configuration.dart';
@@ -12,6 +13,7 @@ class ReportArgumentsStrip extends StatefulWidget {
   final Function(ReportArgumentModel) onReportArgumentModelChanged;
   final Function(ReportArgumentModel reportArgumentModel) onRunReport;
   final Function(bool visible) onDialogVisibilityChanged;
+  final ReportArgumentsStripPermissions? permissions;
 
   final bool canRunReport;
 
@@ -21,7 +23,8 @@ class ReportArgumentsStrip extends StatefulWidget {
       required this.onReportArgumentModelChanged,
       required this.onRunReport,
       required this.canRunReport,
-      required this.onDialogVisibilityChanged});
+      required this.onDialogVisibilityChanged,
+      this.permissions});
   @override
   State<StatefulWidget> createState() {
     return _ReportArgumentsStripState();
@@ -113,30 +116,48 @@ class _ReportArgumentsStripState extends State<ReportArgumentsStrip> {
     required String label,
     required String value,
     required Function onTapped,
+    Future<bool> Function()? canChangeResolver,
   }) {
-    const linkStyle = TextStyle(color: Colors.blue);
-    return Container(
-      margin: const EdgeInsets.only(top: 5),
-      child: InkWell(
-        onTap: () {
-          onTapped();
-        },
-        child: Row(
-          children: [
-            Text(
-              label,
-              style: linkStyle,
-            ),
-            Text(
-              value,
-              maxLines: 2,
-              overflow: TextOverflow.ellipsis,
-              style: linkStyle,
-            ),
-          ],
-        ),
-      ),
-    );
+    canChangeResolver ??= () async {
+      return true;
+    };
+
+    return FutureBuilder<bool>(
+        future: canChangeResolver(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState != ConnectionState.done) {
+            return Container();
+          } else {
+            final canChange = snapshot.data ?? true;
+            final linkStyle = canChange == false
+                ? const TextStyle(color: Colors.grey)
+                : const TextStyle(color: Colors.blue);
+            return Container(
+              margin: const EdgeInsets.only(top: 5),
+              child: InkWell(
+                onTap: canChange == false
+                    ? null
+                    : () {
+                        onTapped();
+                      },
+                child: Row(
+                  children: [
+                    Text(
+                      label,
+                      style: linkStyle,
+                    ),
+                    Text(
+                      value,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: linkStyle,
+                    ),
+                  ],
+                ),
+              ),
+            );
+          }
+        });
   }
 
   _showStorePickerAsync() async {
@@ -149,12 +170,14 @@ class _ReportArgumentsStripState extends State<ReportArgumentsStrip> {
               key: UniqueKey(),
               options: AuthenticationMessenger().vendorLocations.toSet(),
               title: strings.selectStores,
-              getLabel: (opt) => opt.displayLabel.valueOrDefault(),
+              getLabel: (opt) =>
+                  (opt as VendorLocationModel).displayLabel.valueOrDefault(),
               selectedOptions:
                   widget.reportArgumentModel.vendorLocations.toSet(),
               onOk: (selectedOptions) {
-                widget.reportArgumentModel.vendorLocations =
-                    selectedOptions.toList();
+                widget.reportArgumentModel.vendorLocations = selectedOptions
+                    .map((e) => e as VendorLocationModel)
+                    .toList();
                 widget.onReportArgumentModelChanged(widget.reportArgumentModel);
               });
         },

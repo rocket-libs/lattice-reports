@@ -4,9 +4,9 @@ import 'package:lattice_reports/lattice_reports_configuration.dart';
 class CheckBoxDialog<TOption> extends StatefulWidget {
   final Set<TOption> options;
   final String title;
-  final String Function(TOption) getLabel;
+  final String Function(dynamic) getLabel;
   final Set<TOption> selectedOptions;
-  final Function(Set<TOption> selectedOptions) onOk;
+  final Function(Set<dynamic> selectedOptions) onOk;
   final Function()? onCancel;
 
   const CheckBoxDialog({
