@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:lattice_reports/AppMultiselect/check_box_dialog.dart';
 import 'package:lattice_reports/Authentication/Messaging/authentication_messenger.dart';
 import 'package:lattice_reports/Data/report_argument_model.dart';
+import 'package:lattice_reports/NonNullable/non_nullable_extensions.dart';
 import 'package:lattice_reports/UI/date_range_picker.dart';
-import 'package:lattice_reports/VendorLocations/UI/vendor_locations_picker.dart';
+import 'package:lattice_reports/VendorLocations/Data/vendor_location_model.dart';
+import 'package:lattice_reports/lattice_reports_configuration.dart';
 
 class ReportArgumentsStrip extends StatefulWidget {
   final ReportArgumentModel reportArgumentModel;
   final Function(ReportArgumentModel) onReportArgumentModelChanged;
   final Function(ReportArgumentModel reportArgumentModel) onRunReport;
+  final Function(bool visible) onDialogVisibilityChanged;
 
   final bool canRunReport;
 
@@ -16,7 +20,8 @@ class ReportArgumentsStrip extends StatefulWidget {
       required this.reportArgumentModel,
       required this.onReportArgumentModelChanged,
       required this.onRunReport,
-      required this.canRunReport});
+      required this.canRunReport,
+      required this.onDialogVisibilityChanged});
   @override
   State<StatefulWidget> createState() {
     return _ReportArgumentsStripState();
@@ -24,44 +29,45 @@ class ReportArgumentsStrip extends StatefulWidget {
 }
 
 class _ReportArgumentsStripState extends State<ReportArgumentsStrip> {
-  showDialogVendorLocationPicker(BuildContext context) async {
-    final tempArgs = ReportArgumentModel(
-        dateOne: widget.reportArgumentModel.dateOne,
-        dateTwo: widget.reportArgumentModel.dateTwo,
-        vendorLocations: widget.reportArgumentModel.vendorLocations);
+  final strings = LatticeReportsConfiguration.strings;
+  // showDialogVendorLocationPicker(BuildContext context) async {
+  //   final tempArgs = ReportArgumentModel(
+  //       dateOne: widget.reportArgumentModel.dateOne,
+  //       dateTwo: widget.reportArgumentModel.dateTwo,
+  //       vendorLocations: widget.reportArgumentModel.vendorLocations);
 
-    await showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text("Select Branches"),
-        content: VendorLocationsPicker(
-          vendorLocations: AuthenticationMessenger().vendorLocations,
-          onSelectedVendorLocationsChanged: (selectedVendorLocations) {
-            tempArgs.vendorLocations = selectedVendorLocations.toList();
-          },
-          selectedVendorLocations: tempArgs.vendorLocations,
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(
-              context,
-            ),
-            child: const Text('Cancel'),
-          ),
-          TextButton(
-            onPressed: () {
-              widget.reportArgumentModel.vendorLocations =
-                  tempArgs.vendorLocations;
-              widget.onReportArgumentModelChanged(widget.reportArgumentModel);
+  //   await showDialog(
+  //     context: context,
+  //     builder: (context) => AlertDialog(
+  //       title:  Text(strings.selectStores),
+  //       content: VendorLocationsPicker(
+  //         vendorLocations: AuthenticationMessenger().vendorLocations,
+  //         onSelectedVendorLocationsChanged: (selectedVendorLocations) {
+  //           tempArgs.vendorLocations = selectedVendorLocations.toList();
+  //         },
+  //         selectedVendorLocations: tempArgs.vendorLocations,
+  //       ),
+  //       actions: [
+  //         TextButton(
+  //           onPressed: () => Navigator.pop(
+  //             context,
+  //           ),
+  //           child: const Text('Cancel'),
+  //         ),
+  //         TextButton(
+  //           onPressed: () {
+  //             widget.reportArgumentModel.vendorLocations =
+  //                 tempArgs.vendorLocations;
+  //             widget.onReportArgumentModelChanged(widget.reportArgumentModel);
 
-              Navigator.pop(context);
-            },
-            child: const Text('OK'),
-          ),
-        ],
-      ),
-    );
-  }
+  //             Navigator.pop(context);
+  //           },
+  //           child: const Text('OK'),
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
 
   showDialogDateRange(BuildContext context) async {
     final tempArgs = ReportArgumentModel(
@@ -69,33 +75,38 @@ class _ReportArgumentsStripState extends State<ReportArgumentsStrip> {
         dateTwo: widget.reportArgumentModel.dateTwo,
         vendorLocations: widget.reportArgumentModel.vendorLocations);
 
-    await showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: const Text("Select Date"),
-        content: DateRangePicker(
-          reportArgumentModel: tempArgs,
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(
-              context,
+    try {
+      widget.onDialogVisibilityChanged(true);
+      await showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text("Select Date"),
+          content: DateRangePicker(
+            reportArgumentModel: tempArgs,
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(
+                context,
+              ),
+              child: const Text('Cancel'),
             ),
-            child: const Text('Cancel'),
-          ),
-          TextButton(
-            onPressed: () {
-              widget.reportArgumentModel.dateOne = tempArgs.dateOne;
-              widget.reportArgumentModel.dateTwo = tempArgs.dateTwo;
-              widget.onReportArgumentModelChanged(widget.reportArgumentModel);
+            TextButton(
+              onPressed: () {
+                widget.reportArgumentModel.dateOne = tempArgs.dateOne;
+                widget.reportArgumentModel.dateTwo = tempArgs.dateTwo;
+                widget.onReportArgumentModelChanged(widget.reportArgumentModel);
 
-              Navigator.pop(context);
-            },
-            child: const Text('OK'),
-          ),
-        ],
-      ),
-    );
+                Navigator.pop(context);
+              },
+              child: const Text('OK'),
+            ),
+          ],
+        ),
+      );
+    } finally {
+      widget.onDialogVisibilityChanged(false);
+    }
   }
 
   Widget _getGetArgItem({
@@ -128,6 +139,31 @@ class _ReportArgumentsStripState extends State<ReportArgumentsStrip> {
     );
   }
 
+  _showStorePickerAsync() async {
+    try {
+      widget.onDialogVisibilityChanged(true);
+      await showDialog(
+        context: context,
+        builder: (context) {
+          return CheckBoxDialog<VendorLocationModel>(
+              key: UniqueKey(),
+              options: AuthenticationMessenger().vendorLocations.toSet(),
+              title: strings.selectStores,
+              getLabel: (opt) => opt.displayLabel.valueOrDefault(),
+              selectedOptions:
+                  widget.reportArgumentModel.vendorLocations.toSet(),
+              onOk: (selectedOptions) {
+                widget.reportArgumentModel.vendorLocations =
+                    selectedOptions.toList();
+                widget.onReportArgumentModelChanged(widget.reportArgumentModel);
+              });
+        },
+      );
+    } finally {
+      widget.onDialogVisibilityChanged(false);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -154,7 +190,7 @@ class _ReportArgumentsStripState extends State<ReportArgumentsStrip> {
                 label: "Branches: ",
                 value: widget.reportArgumentModel.vendorLocationsDescription,
                 onTapped: () async {
-                  await showDialogVendorLocationPicker(context);
+                  await _showStorePickerAsync();
                 },
               ),
               // Container(

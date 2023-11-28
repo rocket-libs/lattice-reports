@@ -1,5 +1,7 @@
 // Auto generated file, change at risk of code getting overwritten later
 
+// ignore_for_file: prefer_null_aware_operators
+
 import 'package:flutter_guid/flutter_guid.dart';
 import 'package:lattice_reports/Dataflow/model.dart';
 import 'package:preflection/MapReader.dart';

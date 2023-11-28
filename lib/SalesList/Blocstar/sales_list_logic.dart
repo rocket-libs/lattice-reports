@@ -1,4 +1,5 @@
 import 'package:flutter_guid/flutter_guid.dart';
+import 'package:lattice_reports/Authentication/Messaging/authentication_messenger.dart';
 import 'package:lattice_reports/Data/order_data_point_model.dart';
 import 'package:lattice_reports/Data/report_argument_model.dart';
 import 'package:lattice_reports/NonNullable/non_nullable_extensions.dart';
@@ -10,6 +11,8 @@ import 'sales_list_context.dart';
 class SalesListLogic extends LogicBase<SalesListContext> {
   @override
   Future initializeAsync() async {
+    final currentVendorLocation =
+        AuthenticationMessenger().currentVendorLocation;
     context = SalesListContext(
       this,
       userProfileId: Guid.defaultValue,
@@ -17,7 +20,8 @@ class SalesListLogic extends LogicBase<SalesListContext> {
       reportArgumentModel: ReportArgumentModel(
         dateOne: DateTime.now(),
         dateTwo: DateTime.now(),
-        vendorLocations: [],
+        vendorLocations:
+            currentVendorLocation != null ? [currentVendorLocation] : [],
       ),
     );
     await super.initializeAsync();

@@ -16,6 +16,7 @@ class SalesList extends StatefulWidget {
 }
 
 class _SalesListState extends WidgetState<SalesList, SalesListLogic> {
+  bool _hideContent = false;
   String _getPrettyLabel({required String value}) {
     final bits = value.split(".");
     try {
@@ -51,81 +52,88 @@ class _SalesListState extends WidgetState<SalesList, SalesListLogic> {
       appBar: AppBar(
         title: const Text("Sales List"),
       ),
-      body: WithProgress(
-        showProgress: isBusy,
-        child: Column(
-          children: [
-            // Fixed position widgets
-            ReportArgumentsStrip(
-              canRunReport: logic.canCallApi,
-              reportArgumentModel: logic.context.reportArgumentModel,
-              onRunReport: (reportArgumentModel) async {
-                await logic.runReportAsync();
-              },
-              onReportArgumentModelChanged: (reportArgs) async {
-                logic.context.merge(newReportArgumentModel: reportArgs);
-                await logic.runReportAsync();
-              },
-            ),
-            Container(
-                margin: const EdgeInsets.only(top: 0),
-                child: Card(
-                  elevation: 0.3,
-                  child: ListTile(
-                    title: Text(
-                      "Grand Total",
-                      style: Theme.of(context).textTheme.headlineSmall,
-                    ),
-                    trailing: Text(
-                      logic.grandTotal.formatAsCurrency(),
-                      style: Theme.of(context).textTheme.headlineSmall,
-                    ),
+      body: _hideContent
+          ? Container()
+          : WithProgress(
+              showProgress: isBusy,
+              child: Column(
+                children: [
+                  // Fixed position widgets
+                  ReportArgumentsStrip(
+                    onDialogVisibilityChanged: (visible) {
+                      setState(() {
+                        _hideContent = visible;
+                      });
+                    },
+                    canRunReport: logic.canCallApi,
+                    reportArgumentModel: logic.context.reportArgumentModel,
+                    onRunReport: (reportArgumentModel) async {
+                      await logic.runReportAsync();
+                    },
+                    onReportArgumentModelChanged: (reportArgs) async {
+                      logic.context.merge(newReportArgumentModel: reportArgs);
+                      await logic.runReportAsync();
+                    },
                   ),
-                )),
-            // Scrollable content
-            Expanded(
-              child: ListView(
-                children: List.generate(logic.sales.length, (index) {
-                  final item = logic.sales[index];
-                  return Card(
-                    elevation: 0.3,
-                    child: ListTile(
-                      leading: Text((index + 1).toString()),
-                      title: Text(
-                        _getPrettyLabel(
-                            value: item.displayLabel.valueOrDefault()),
-                        style: const TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold),
-                      ),
-                      subtitle: logic.showingMultipleDates
-                          ? Container()
-                          : Column(
-                              children: [
-                                _getCardRow(
-                                    label: "Quantity",
-                                    value: item.quantity
-                                        .toDouble()
-                                        .formatAsCurrency()),
-                                _getCardRow(
-                                    label: "Price",
-                                    value: item.value.formatAsCurrency()),
-                              ],
+                  Container(
+                      margin: const EdgeInsets.only(top: 0),
+                      child: Card(
+                        elevation: 0.3,
+                        child: ListTile(
+                          title: Text(
+                            "Grand Total",
+                            style: Theme.of(context).textTheme.headlineSmall,
+                          ),
+                          trailing: Text(
+                            logic.grandTotal.formatAsCurrency(),
+                            style: Theme.of(context).textTheme.headlineSmall,
+                          ),
+                        ),
+                      )),
+                  // Scrollable content
+                  Expanded(
+                    child: ListView(
+                      children: List.generate(logic.sales.length, (index) {
+                        final item = logic.sales[index];
+                        return Card(
+                          elevation: 0.3,
+                          child: ListTile(
+                            leading: Text((index + 1).toString()),
+                            title: Text(
+                              _getPrettyLabel(
+                                  value: item.displayLabel.valueOrDefault()),
+                              style: const TextStyle(
+                                  fontSize: 18, fontWeight: FontWeight.bold),
                             ),
-                      trailing: Text(
-                        item.lineTotal.formatAsCurrency(),
-                        style: const TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.blueGrey),
-                      ),
+                            subtitle: logic.showingMultipleDates
+                                ? Container()
+                                : Column(
+                                    children: [
+                                      _getCardRow(
+                                          label: "Quantity",
+                                          value: item.quantity
+                                              .toDouble()
+                                              .formatAsCurrency()),
+                                      _getCardRow(
+                                          label: "Price",
+                                          value: item.value.formatAsCurrency()),
+                                    ],
+                                  ),
+                            trailing: Text(
+                              item.lineTotal.formatAsCurrency(),
+                              style: const TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.blueGrey),
+                            ),
+                          ),
+                        );
+                      }),
                     ),
-                  );
-                }),
+                  )
+                ],
               ),
-            )
-          ],
-        ),
-      ),
+            ),
     );
   }
 }

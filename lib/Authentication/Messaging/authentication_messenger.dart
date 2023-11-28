@@ -40,6 +40,16 @@ class AuthenticationMessenger extends Messenger<AuthenticationInformation> {
     }
   }
 
+  VendorLocationModel? get currentVendorLocation {
+    if (vendorLocations.isEmpty) {
+      return null;
+    } else {
+      return vendorLocations.firstWhere(
+          (element) => element.id == authenticationInformation.vendorLocationId,
+          orElse: () => vendorLocations.first);
+    }
+  }
+
   Future fetchVendorLocationsAsync() async {
     if (_isFetchingVendorLocations) {
       return;
