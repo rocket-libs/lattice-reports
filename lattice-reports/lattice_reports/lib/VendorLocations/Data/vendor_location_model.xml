@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VendorLocationModel>
+    <props>
+        <displayLabel type="String" />
+        <contactPhoneNumber type="String" />
+        <businessLocation type="object" propType="LocationModel" />
+        <farthestDeliveryPoint type="object" propType="LocationModel" />
+        <vendorUserId type="Guid" />
+        <userGroupId type="Guid" />
+    </props>
+</VendorLocationModel>

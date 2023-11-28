@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OrderDataPointModel>
+    <props>
+        <dated type="DateTime" />
+        <orderHeaderId type="Guid" />
+        <displayLabel type="String" />
+        <quantity type="int" />
+        <value type="double" />
+        <lineTotal type="double" />
+        <orderLineItemId type="Guid" />
+        <dateLabel type="String" />
+        <methodOfPayment type="String" />
+        <aggregatorId type="Guid" />
+        <unAggregatedItemsCount type="int" />
+        <phoneNumber type="String" />
+    </props>
+</OrderDataPointModel>

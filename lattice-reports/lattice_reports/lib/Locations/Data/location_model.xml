@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LocationModel>
+    <props>
+        <longitude type="double" />
+        <latitude type="double" />
+        <accuracy type="double" />
+        <name type="String" />
+        <displayLabel type="String" />
+    </props>
+</LocationModel>
