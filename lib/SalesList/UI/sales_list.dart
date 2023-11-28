@@ -49,6 +49,14 @@ class _SalesListState extends WidgetState<SalesList, SalesListLogic> {
   }
 
   @override
+  Future<void> onFirstBuildAsync() async {
+    if (logic.canCallApi) {
+      await logic.runReportAsync();
+    }
+    return super.onFirstBuildAsync();
+  }
+
+  @override
   Widget buildRootWidget(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
