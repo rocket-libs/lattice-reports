@@ -17,12 +17,10 @@ class LatticeReportsConfiguration {
       required void Function(String message) v}) {
     LoggerWrapper().configure(i: i, v: v, e: e);
     LatticeReportsConfiguration.environmentInformation = environmentInfo;
-    AuthenticationMessenger().configure(
-        getAuthenticationInformation: () async => authenticationInfo,
-        authenticationInformation: authenticationInfo);
+    AuthenticationMessenger()
+        .configure(authenticationInformation: authenticationInfo);
 
-    ApplicationInformationMessenger().configure(
-        getApplicationInformationAsync: () async => applicationInfo,
-        applicationInformation: applicationInfo);
+    ApplicationInformationMessenger()
+        .configure(applicationInformation: applicationInfo);
   }
 }

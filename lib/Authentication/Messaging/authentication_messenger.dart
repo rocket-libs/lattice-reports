@@ -8,18 +8,11 @@ import '../Data/authentication_information.dart';
 class AuthenticationMessenger extends Messenger<AuthenticationInformation> {
   final List<VendorLocationModel> vendorLocations = [];
   bool _isFetchingVendorLocations = false;
-  Future<AuthenticationInformation> Function()? _getAuthenticationInformation;
 
-  AuthenticationMessenger._() {
-    refreshAsync();
-  }
-
-  configure(
-      {required Future<AuthenticationInformation> Function()
-          getAuthenticationInformation,
-      required AuthenticationInformation authenticationInformation}) {
-    _getAuthenticationInformation = getAuthenticationInformation;
+  AuthenticationMessenger._();
+  configure({required AuthenticationInformation authenticationInformation}) {
     single = authenticationInformation;
+    refreshAsync();
   }
 
   static final AuthenticationMessenger _instance = AuthenticationMessenger._();
@@ -31,14 +24,7 @@ class AuthenticationMessenger extends Messenger<AuthenticationInformation> {
 
   @override
   Future refreshAsync() async {
-    try {
-      if (_getAuthenticationInformation == null) {
-        throw Exception("Authentication messenger is not configured.");
-      }
-      single = await _getAuthenticationInformation!();
-    } finally {
-      await fetchVendorLocationsAsync();
-    }
+    await fetchVendorLocationsAsync();
   }
 
   AuthenticationInformation get authenticationInformation {

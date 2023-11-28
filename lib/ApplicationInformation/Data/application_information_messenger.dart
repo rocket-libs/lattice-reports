@@ -3,17 +3,9 @@ import 'package:lattice_reports/Messaging/messenger.dart';
 
 class ApplicationInformationMessenger
     extends Messenger<ApplicationInformation> {
-  Future<ApplicationInformation> Function()? _getApplicationInformationAsync;
+  ApplicationInformationMessenger._();
 
-  ApplicationInformationMessenger._() {
-    refreshAsync();
-  }
-
-  configure(
-      {required Future<ApplicationInformation> Function()
-          getApplicationInformationAsync,
-      required ApplicationInformation applicationInformation}) {
-    _getApplicationInformationAsync = getApplicationInformationAsync;
+  configure({required ApplicationInformation applicationInformation}) {
     single = applicationInformation;
   }
 
@@ -37,10 +29,7 @@ class ApplicationInformationMessenger
   }
 
   @override
-  Future refreshAsync() async {
-    if (_getApplicationInformationAsync == null) {
-      throw Exception("ApplicationInformation messenger is not configured.");
-    }
-    single = await _getApplicationInformationAsync!();
+  Future refreshAsync() {
+    return Future.value();
   }
 }
