@@ -1,6 +1,6 @@
 name: lattice_reports
 description: "A new Flutter package project."
-version: 0.0.8
+version: 0.0.9
 homepage:
 
 environment:
@@ -8,6 +8,7 @@ environment:
   flutter: ">=1.17.0"
 
 dependencies:
+  bargain_di: ^1.0.5
   blocstar: ^1.4.2
   connectivity_plus: ^5.0.2
   flutter:

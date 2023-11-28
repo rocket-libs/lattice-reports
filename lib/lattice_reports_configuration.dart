@@ -1,3 +1,4 @@
+import 'package:bargain_di/ObjectFactory.dart';
 import 'package:lattice_reports/ApplicationInformation/Data/application_information.dart';
 import 'package:lattice_reports/ApplicationInformation/Data/application_information_messenger.dart';
 import 'package:lattice_reports/Authentication/Data/authentication_information.dart';
@@ -6,6 +7,7 @@ import 'package:lattice_reports/Data/order_data_point_model.dart';
 import 'package:lattice_reports/Dataflow/environment_information.dart';
 import 'package:lattice_reports/Locations/Data/location_model.dart';
 import 'package:lattice_reports/Logging/logger_wrapper.dart';
+import 'package:lattice_reports/SalesList/Blocstar/sales_list_logic.dart';
 import 'package:lattice_reports/VendorLocations/Data/vendor_location_model.dart';
 import 'package:preflection/preflection.dart';
 
@@ -19,7 +21,8 @@ class LatticeReportsConfiguration {
       required void Function(String message) e,
       required void Function(String message) i,
       required void Function(String message) v,
-      required PreflectorFactory preflectorFactory}) async {
+      required PreflectorFactory preflectorFactory,
+      required ObjectFactory logicRegistry}) async {
     LoggerWrapper().configure(i: i, v: v, e: e);
     LatticeReportsConfiguration.environmentInformation = environmentInfo;
     await AuthenticationMessenger()
@@ -32,5 +35,7 @@ class LatticeReportsConfiguration {
       ..addCreator(() => VendorLocationModel())
       ..addCreator(() => OrderDataPointModel())
       ..addCreator(() => LocationModel());
+
+    logicRegistry.registerImplicit(() => SalesListLogic());
   }
 }
