@@ -13,7 +13,7 @@ class ReportArgumentsStrip extends StatefulWidget {
   final Function(ReportArgumentModel) onReportArgumentModelChanged;
   final Function(ReportArgumentModel reportArgumentModel) onRunReport;
   final Function(bool visible) onDialogVisibilityChanged;
-  final ReportArgumentsStripPermissions? permissions;
+  final ReportArgumentsStripPermissions permissions;
 
   final bool canRunReport;
 
@@ -24,7 +24,7 @@ class ReportArgumentsStrip extends StatefulWidget {
       required this.onRunReport,
       required this.canRunReport,
       required this.onDialogVisibilityChanged,
-      this.permissions});
+      required this.permissions});
   @override
   State<StatefulWidget> createState() {
     return _ReportArgumentsStripState();
@@ -116,12 +116,8 @@ class _ReportArgumentsStripState extends State<ReportArgumentsStrip> {
     required String label,
     required String value,
     required Function onTapped,
-    Future<bool> Function()? canChangeResolver,
+    required Future<bool> Function() canChangeResolver,
   }) {
-    canChangeResolver ??= () async {
-      return true;
-    };
-
     return FutureBuilder<bool>(
         future: canChangeResolver(),
         builder: (context, snapshot) {
@@ -208,12 +204,18 @@ class _ReportArgumentsStripState extends State<ReportArgumentsStrip> {
                 onTapped: () async {
                   await showDialogDateRange(context);
                 },
+                canChangeResolver: () async {
+                  return await widget.permissions.canChangeDateRange();
+                },
               ),
               _getGetArgItem(
                 label: "${strings.stores}: ",
                 value: widget.reportArgumentModel.vendorLocationsDescription,
                 onTapped: () async {
                   await _showStorePickerAsync();
+                },
+                canChangeResolver: () async {
+                  return await widget.permissions.canChangeVendorLocations();
                 },
               ),
               // Container(

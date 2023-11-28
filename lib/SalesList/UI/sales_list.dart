@@ -72,6 +72,7 @@ class _SalesListState extends WidgetState<SalesList, SalesListLogic> {
                 children: [
                   // Fixed position widgets
                   ReportArgumentsStrip(
+                    permissions: widget.reportArgumentsStripPermissions,
                     onDialogVisibilityChanged: (visible) {
                       setState(() {
                         _hideContent = visible;
