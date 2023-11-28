@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:lattice_reports/Authentication/Messaging/authentication_messenger.dart';
 import 'package:lattice_reports/Data/report_argument_model.dart';
 import 'package:lattice_reports/UI/date_range_picker.dart';
-import 'package:lattice_reports/VendorLocations/Data/vendor_location_model.dart';
 import 'package:lattice_reports/VendorLocations/UI/vendor_locations_picker.dart';
 
 class ReportArgumentsStrip extends StatefulWidget {
   final ReportArgumentModel reportArgumentModel;
   final Function(ReportArgumentModel) onReportArgumentModelChanged;
   final Function(ReportArgumentModel reportArgumentModel) onRunReport;
-  final List<VendorLocationModel> vendorLocations;
+
   final bool canRunReport;
 
   const ReportArgumentsStrip(
@@ -16,7 +16,6 @@ class ReportArgumentsStrip extends StatefulWidget {
       required this.reportArgumentModel,
       required this.onReportArgumentModelChanged,
       required this.onRunReport,
-      required this.vendorLocations,
       required this.canRunReport});
   @override
   State<StatefulWidget> createState() {
@@ -36,7 +35,7 @@ class _ReportArgumentsStripState extends State<ReportArgumentsStrip> {
       builder: (context) => AlertDialog(
         title: const Text("Select Branches"),
         content: VendorLocationsPicker(
-          vendorLocations: widget.vendorLocations,
+          vendorLocations: AuthenticationMessenger().vendorLocations,
           onSelectedVendorLocationsChanged: (selectedVendorLocations) {
             tempArgs.vendorLocations = selectedVendorLocations.toList();
           },

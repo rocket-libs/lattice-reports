@@ -6,7 +6,6 @@ import 'package:lattice_reports/VendorLocations/Data/vendor_location_model.dart'
 import '../Data/authentication_information.dart';
 
 class AuthenticationMessenger extends Messenger<AuthenticationInformation> {
-  // static const String _key = "latticeAuth";
   final List<VendorLocationModel> vendorLocations = [];
   bool _isFetchingVendorLocations = false;
   Future<AuthenticationInformation> Function()? _getAuthenticationInformation;
@@ -42,24 +41,13 @@ class AuthenticationMessenger extends Messenger<AuthenticationInformation> {
     }
   }
 
-  // set vendorLocationId(Guid value) {
-  //   authenticationInformation.vendorLocationId = value;
-  //   setAuthenticationInformationAsync(authenticationInformation);
-  // }
-
-  // set phoneNumber(String value) {
-  //   authenticationInformation.phoneNumber = value;
-  //   setAuthenticationInformationAsync(authenticationInformation);
-  // }
-
   AuthenticationInformation get authenticationInformation {
     if (many.isEmpty) {
       return AuthenticationInformation(
-          userProfileId: Guid.defaultValue,
-          userSessionId: Guid.defaultValue,
-          vendorLocationId: Guid.defaultValue,
-          phoneNumber: "",
-          userId: Guid.defaultValue);
+        userProfileId: Guid.defaultValue,
+        userSessionId: Guid.defaultValue,
+        vendorLocationId: Guid.defaultValue,
+      );
     } else {
       return many.first;
     }
@@ -97,30 +85,4 @@ class AuthenticationMessenger extends Messenger<AuthenticationInformation> {
           orElse: () => vendorLocations.first);
     }
   }
-
-  // setAuthenticationInformationAsync(AuthenticationInformation value) async {
-  //   final sharedPrefs = await SharedPreferences.getInstance();
-
-  //   final json = jsonEncode(value.toJson());
-  //   if (!(await sharedPrefs.setString(_key, json))) {
-  //     throw Exception("Could not save authentication information.");
-  //   }
-
-  //   many = [value];
-  // }
-
-  // signOutAsync() async {
-  //   final sharedPrefs = await SharedPreferences.getInstance();
-  //   if (!(await sharedPrefs.remove(_key))) {
-  //     throw Exception("Could not remove authentication information.");
-  //   }
-  //   many = [
-  //     AuthenticationInformation(
-  //         userProfileId: Guid.defaultValue,
-  //         userSessionId: Guid.defaultValue,
-  //         vendorLocationId: Guid.defaultValue,
-  //         phoneNumber: "",
-  //         userId: Guid.defaultValue)
-  //   ];
-  // }
 }

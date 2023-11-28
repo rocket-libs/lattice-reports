@@ -14,6 +14,8 @@ class LoggerWrapper {
       required void Function(String message) v,
       required void Function(String message) e}) {
     _i = i;
+    _e = e;
+    _v = v;
   }
 
   get i {

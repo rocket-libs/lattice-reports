@@ -3,13 +3,11 @@ import 'package:flutter_guid/flutter_guid.dart';
 import 'package:lattice_reports/Blocstar/UI/widget_state.dart';
 import 'package:lattice_reports/NonNullable/non_nullable_extensions.dart';
 import 'package:lattice_reports/UI/report_arguments_strip.dart';
-import 'package:lattice_reports/VendorLocations/Data/vendor_location_model.dart';
 import 'package:lattice_reports/WithProgress/UI/with_progress.dart';
 import '../Blocstar/sales_list_logic.dart';
 
 class SalesList extends StatefulWidget {
-  final List<VendorLocationModel> vendorLocations;
-  const SalesList({super.key, required this.vendorLocations});
+  const SalesList({super.key});
 
   @override
   State<StatefulWidget> createState() {
@@ -60,7 +58,6 @@ class _SalesListState extends WidgetState<SalesList, SalesListLogic> {
             // Fixed position widgets
             ReportArgumentsStrip(
               canRunReport: logic.canCallApi,
-              vendorLocations: widget.vendorLocations,
               reportArgumentModel: logic.context.reportArgumentModel,
               onRunReport: (reportArgumentModel) async {
                 await logic.runReportAsync();
