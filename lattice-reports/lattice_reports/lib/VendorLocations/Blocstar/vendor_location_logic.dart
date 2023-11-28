@@ -4,7 +4,6 @@ import 'package:lattice_reports/Blocstar/logic_base.dart';
 import 'package:lattice_reports/Locations/Data/location_model.dart';
 import 'package:lattice_reports/NonNullable/non_nullable_extensions.dart';
 import 'package:lattice_reports/VendorLocations/Blocstar/vendor_location_context.dart';
-import 'package:lattice_reports/VendorLocations/Data/vendor_location_api_caller.dart';
 import 'package:lattice_reports/VendorLocations/Data/vendor_location_model.dart';
 
 class VendorLocationLogic extends LogicBase<VendorLocationContext> {

@@ -31,7 +31,7 @@ abstract class WidgetState<TWidget extends StatefulWidget,
 
   double get usableHeight {
     final mediaQuery = MediaQuery.of(context);
-    final appBarHeight = kToolbarHeight;
+    const appBarHeight = kToolbarHeight;
     final viewPortHeight = mediaQuery.size.height - mediaQuery.padding.top;
     return viewPortHeight - appBarHeight;
   }

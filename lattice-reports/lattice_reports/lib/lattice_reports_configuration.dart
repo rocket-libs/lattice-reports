@@ -7,7 +7,6 @@ import 'package:lattice_reports/Logging/logger_wrapper.dart';
 
 class LatticeReportsConfiguration {
   static EnvironmentInformation? environmentInformation;
-  static LoggerWrapper? _logger;
 
   LatticeReportsConfiguration({
     required EnvironmentInformation environmentInfo,

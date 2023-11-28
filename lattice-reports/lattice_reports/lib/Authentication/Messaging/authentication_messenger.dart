@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter_guid/flutter_guid.dart';
 import 'package:lattice_reports/Messaging/messenger.dart';
 import 'package:lattice_reports/VendorLocations/Data/vendor_location_api_caller.dart';
