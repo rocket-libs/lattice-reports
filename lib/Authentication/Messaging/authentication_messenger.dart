@@ -10,9 +10,10 @@ class AuthenticationMessenger extends Messenger<AuthenticationInformation> {
   bool _isFetchingVendorLocations = false;
 
   AuthenticationMessenger._();
-  configure({required AuthenticationInformation authenticationInformation}) {
+  configureAsync(
+      {required AuthenticationInformation authenticationInformation}) async {
     single = authenticationInformation;
-    refreshAsync();
+    await refreshAsync();
   }
 
   static final AuthenticationMessenger _instance = AuthenticationMessenger._();

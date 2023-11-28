@@ -12,18 +12,18 @@ import 'package:preflection/preflection.dart';
 class LatticeReportsConfiguration {
   static EnvironmentInformation? environmentInformation;
 
-  LatticeReportsConfiguration(
+  Future configureAsync(
       {required EnvironmentInformation environmentInfo,
       required AuthenticationInformation authenticationInfo,
       required ApplicationInformation applicationInfo,
       required void Function(String message) e,
       required void Function(String message) i,
       required void Function(String message) v,
-      required PreflectorFactory preflectorFactory}) {
+      required PreflectorFactory preflectorFactory}) async {
     LoggerWrapper().configure(i: i, v: v, e: e);
     LatticeReportsConfiguration.environmentInformation = environmentInfo;
-    AuthenticationMessenger()
-        .configure(authenticationInformation: authenticationInfo);
+    await AuthenticationMessenger()
+        .configureAsync(authenticationInformation: authenticationInfo);
 
     ApplicationInformationMessenger()
         .configure(applicationInformation: applicationInfo);
