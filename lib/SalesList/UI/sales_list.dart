@@ -2,13 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_guid/flutter_guid.dart';
 import 'package:lattice_reports/Blocstar/UI/widget_state.dart';
 import 'package:lattice_reports/NonNullable/non_nullable_extensions.dart';
+import 'package:lattice_reports/ReportArgumentsStrip/Data/report_arguments_strip_permissions.dart';
 import 'package:lattice_reports/ReportArgumentsStrip/UI/report_arguments_strip.dart';
 import 'package:lattice_reports/WithProgress/UI/with_progress.dart';
 import 'package:lattice_reports/lattice_reports_configuration.dart';
 import '../Blocstar/sales_list_logic.dart';
 
 class SalesList extends StatefulWidget {
-  const SalesList({super.key});
+  final ReportArgumentsStripPermissions reportArgumentsStripPermissions;
+  const SalesList({super.key, required this.reportArgumentsStripPermissions});
 
   @override
   State<StatefulWidget> createState() {
