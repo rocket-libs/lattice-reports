@@ -25,8 +25,6 @@ class LatticeReportsConfiguration {
       required ObjectFactory logicRegistry}) async {
     LoggerWrapper().configure(i: i, v: v, e: e);
     LatticeReportsConfiguration.environmentInformation = environmentInfo;
-    await AuthenticationMessenger()
-        .configureAsync(authenticationInformation: authenticationInfo);
 
     ApplicationInformationMessenger()
         .configure(applicationInformation: applicationInfo);
@@ -37,5 +35,8 @@ class LatticeReportsConfiguration {
       ..addCreator(() => LocationModel());
 
     logicRegistry.registerImplicit(() => SalesListLogic());
+
+    await AuthenticationMessenger()
+        .configureAsync(authenticationInformation: authenticationInfo);
   }
 }
