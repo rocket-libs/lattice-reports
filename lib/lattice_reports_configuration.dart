@@ -2,8 +2,12 @@ import 'package:lattice_reports/ApplicationInformation/Data/application_informat
 import 'package:lattice_reports/ApplicationInformation/Data/application_information_messenger.dart';
 import 'package:lattice_reports/Authentication/Data/authentication_information.dart';
 import 'package:lattice_reports/Authentication/Messaging/authentication_messenger.dart';
+import 'package:lattice_reports/Data/order_data_point_model.dart';
 import 'package:lattice_reports/Dataflow/environment_information.dart';
+import 'package:lattice_reports/Locations/Data/location_model.dart';
 import 'package:lattice_reports/Logging/logger_wrapper.dart';
+import 'package:lattice_reports/VendorLocations/Data/vendor_location_model.dart';
+import 'package:preflection/preflection.dart';
 
 class LatticeReportsConfiguration {
   static EnvironmentInformation? environmentInformation;
@@ -14,7 +18,8 @@ class LatticeReportsConfiguration {
       required ApplicationInformation applicationInfo,
       required void Function(String message) e,
       required void Function(String message) i,
-      required void Function(String message) v}) {
+      required void Function(String message) v,
+      required PreflectorFactory preflectorFactory}) {
     LoggerWrapper().configure(i: i, v: v, e: e);
     LatticeReportsConfiguration.environmentInformation = environmentInfo;
     AuthenticationMessenger()
@@ -22,5 +27,10 @@ class LatticeReportsConfiguration {
 
     ApplicationInformationMessenger()
         .configure(applicationInformation: applicationInfo);
+
+    preflectorFactory
+      ..addCreator(() => VendorLocationModel())
+      ..addCreator(() => OrderDataPointModel())
+      ..addCreator(() => LocationModel());
   }
 }
