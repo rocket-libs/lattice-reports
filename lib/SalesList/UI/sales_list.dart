@@ -4,6 +4,7 @@ import 'package:lattice_reports/Blocstar/UI/widget_state.dart';
 import 'package:lattice_reports/NonNullable/non_nullable_extensions.dart';
 import 'package:lattice_reports/UI/report_arguments_strip.dart';
 import 'package:lattice_reports/WithProgress/UI/with_progress.dart';
+import 'package:lattice_reports/lattice_reports_configuration.dart';
 import '../Blocstar/sales_list_logic.dart';
 
 class SalesList extends StatefulWidget {
@@ -17,6 +18,7 @@ class SalesList extends StatefulWidget {
 
 class _SalesListState extends WidgetState<SalesList, SalesListLogic> {
   bool _hideContent = false;
+  final strings = LatticeReportsConfiguration.strings;
   String _getPrettyLabel({required String value}) {
     final bits = value.split(".");
     try {
@@ -50,7 +52,7 @@ class _SalesListState extends WidgetState<SalesList, SalesListLogic> {
   Widget buildRootWidget(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Sales List"),
+        title: Text(strings.salesList),
       ),
       body: _hideContent
           ? Container()

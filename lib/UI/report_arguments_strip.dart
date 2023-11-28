@@ -80,7 +80,7 @@ class _ReportArgumentsStripState extends State<ReportArgumentsStrip> {
       await showDialog(
         context: context,
         builder: (context) => AlertDialog(
-          title: const Text("Select Date"),
+          title: Text(strings.selectDate),
           content: DateRangePicker(
             reportArgumentModel: tempArgs,
           ),
@@ -89,7 +89,7 @@ class _ReportArgumentsStripState extends State<ReportArgumentsStrip> {
               onPressed: () => Navigator.pop(
                 context,
               ),
-              child: const Text('Cancel'),
+              child: Text(strings.cancel),
             ),
             TextButton(
               onPressed: () {
@@ -99,7 +99,7 @@ class _ReportArgumentsStripState extends State<ReportArgumentsStrip> {
 
                 Navigator.pop(context);
               },
-              child: const Text('OK'),
+              child: Text(strings.ok),
             ),
           ],
         ),
@@ -175,19 +175,19 @@ class _ReportArgumentsStripState extends State<ReportArgumentsStrip> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text(
-                "Report Filters",
-                style: TextStyle(fontSize: 20),
+              Text(
+                strings.reportFilters,
+                style: const TextStyle(fontSize: 20),
               ),
               _getGetArgItem(
-                label: "Date: ",
+                label: "${strings.date}: ",
                 value: widget.reportArgumentModel.dateDescription,
                 onTapped: () async {
                   await showDialogDateRange(context);
                 },
               ),
               _getGetArgItem(
-                label: "Branches: ",
+                label: "${strings.stores}: ",
                 value: widget.reportArgumentModel.vendorLocationsDescription,
                 onTapped: () async {
                   await _showStorePickerAsync();
