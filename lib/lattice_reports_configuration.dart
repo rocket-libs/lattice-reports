@@ -7,6 +7,7 @@ import 'package:lattice_reports/Data/order_data_point_model.dart';
 import 'package:lattice_reports/Dataflow/environment_information.dart';
 import 'package:lattice_reports/Locations/Data/location_model.dart';
 import 'package:lattice_reports/Logging/logger_wrapper.dart';
+import 'package:lattice_reports/QuickOverview/UI/quick_overview.dart';
 import 'package:lattice_reports/SalesList/Blocstar/sales_list_logic.dart';
 import 'package:lattice_reports/Strings/strings.dart';
 import 'package:lattice_reports/VendorLocations/Data/vendor_location_model.dart';
@@ -40,7 +41,9 @@ class LatticeReportsConfiguration {
       ..addCreator(() => OrderDataPointModel())
       ..addCreator(() => LocationModel());
 
-    logicRegistry.registerImplicit(() => SalesListLogic());
+    logicRegistry
+      ..registerImplicit(() => SalesListLogic())
+      ..registerImplicit(() => const QuickOverview());
 
     await AuthenticationMessenger()
         .configureAsync(authenticationInformation: authenticationInfo);

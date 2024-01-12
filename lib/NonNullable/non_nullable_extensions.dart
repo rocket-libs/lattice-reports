@@ -71,9 +71,15 @@ extension Doubles on double? {
     }
   }
 
-  String formatAsCurrency({int fractionDigits = 0}) {
-    return valueOrDefault().toStringAsFixed(fractionDigits).replaceAllMapped(
-        RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},');
+  String formatAsCurrency(
+      {int fractionDigits = 0, bool includePositiveSign = false}) {
+    final value = valueOrDefault();
+    final sign = (value > 0 && includePositiveSign) ? "+" : "";
+    final formatted = valueOrDefault()
+        .toStringAsFixed(fractionDigits)
+        .replaceAllMapped(
+            RegExp(r'(\d{1,3})(?=(\d{3})+(?!\d))'), (Match m) => '${m[1]},');
+    return "$sign$formatted";
   }
 }
 
@@ -98,6 +104,49 @@ extension Ints on int? {
 
   double toDouble() {
     return double.parse(valueOrDefault().toString());
+  }
+
+  String signed() {
+    if (this == null) {
+      return "";
+    } else {
+      final value = this!;
+      if (value > 0) {
+        return "+$value";
+      } else {
+        return value.toString();
+      }
+    }
+  }
+}
+
+extension Nums on num? {
+  num valueOrDefault() {
+    if (this == null) {
+      return 0;
+    } else {
+      return this!;
+    }
+  }
+
+  String formatAsCurrency(
+      {int fractionDigits = 0, bool includePositiveSign = false}) {
+    return valueOrDefault().toDouble().formatAsCurrency(
+        fractionDigits: fractionDigits,
+        includePositiveSign: includePositiveSign);
+  }
+
+  String signed() {
+    if (this == null) {
+      return "";
+    } else {
+      final value = this!;
+      if (value > 0) {
+        return "+$value";
+      } else {
+        return value.toString();
+      }
+    }
   }
 }
 

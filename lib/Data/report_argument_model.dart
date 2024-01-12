@@ -28,14 +28,10 @@ class ReportArgumentModel {
       dateTwo = temp;
     }
 
-    bool isSameDay(DateTime a, DateTime b) {
-      return a.year == b.year && a.month == b.month && a.day == b.day;
-    }
-
-    final argDatesAreSameDay = isSameDay(dateOne, dateTwo);
-    final argDatesAreToday = isSameDay(dateOne, DateTime.now());
+    final argDatesAreSameDay = _isSameDay(dateOne, dateTwo);
+    final argDatesAreToday = _isSameDay(dateOne, DateTime.now());
     final argDatesAreYesterday =
-        isSameDay(dateOne, DateTime.now().subtract(const Duration(days: 1)));
+        _isSameDay(dateOne, DateTime.now().subtract(const Duration(days: 1)));
 
     final Map<bool Function(), String> dateDescriptionMap = {
       () => argDatesAreSameDay && argDatesAreYesterday: "Yesterday",
@@ -49,5 +45,21 @@ class ReportArgumentModel {
     final dateDescription =
         dateDescriptionMap.entries.firstWhere((element) => element.key()).value;
     return dateDescription;
+  }
+
+  ReportArgumentModel get previousPeriodModel {
+    if (_isSameDay(dateOne, dateTwo)) {
+      return ReportArgumentModel(
+          dateOne: dateOne.subtract(const Duration(days: 1)),
+          dateTwo: dateTwo.subtract(const Duration(days: 1)),
+          vendorLocations: vendorLocations);
+    } else {
+      throw Exception("Getting previous period is currently only supported "
+          "for single day periods.");
+    }
+  }
+
+  bool _isSameDay(DateTime a, DateTime b) {
+    return a.year == b.year && a.month == b.month && a.day == b.day;
   }
 }

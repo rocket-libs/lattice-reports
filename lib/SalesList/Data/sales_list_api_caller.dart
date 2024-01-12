@@ -1,10 +1,22 @@
 import 'package:lattice_reports/Data/order_data_point_model.dart';
+import 'package:lattice_reports/Data/report_argument_model.dart';
 import 'package:lattice_reports/Dataflow/endpoint_caller.dart';
 import 'package:lattice_reports/NonNullable/non_nullable_extensions.dart';
 import 'package:preflection/Serializer.dart';
 
 //https://pub.dev/packages/fl_chart
 class SalesListApiCaller {
+  Future<List<OrderDataPointModel>> getByArbitraryDatesWithModelAsync(
+      {required ReportArgumentModel reportArgumentModel,
+      bool aggregateSingleDayData = false}) async {
+    return await getByArbitraryDatesAsync(
+        dateOne: reportArgumentModel.dateOne,
+        dateTwo: reportArgumentModel.dateTwo,
+        vendorLocationIds: reportArgumentModel.vendorLocations
+            .map((e) => e.id.valueOrDefault().toString())
+            .toList());
+  }
+
   Future<List<OrderDataPointModel>> getByArbitraryDatesAsync(
       {required dateOne,
       required dateTwo,
