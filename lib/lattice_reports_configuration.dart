@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:bargain_di/ObjectFactory.dart';
 import 'package:lattice_reports/ApplicationInformation/Data/application_information.dart';
 import 'package:lattice_reports/ApplicationInformation/Data/application_information_messenger.dart';
@@ -11,6 +13,7 @@ import 'package:lattice_reports/QuickOverview/Blocstar/quick_overview_logic.dart
 import 'package:lattice_reports/SalesList/Blocstar/sales_list_logic.dart';
 import 'package:lattice_reports/Strings/strings.dart';
 import 'package:lattice_reports/VendorLocations/Data/vendor_location_model.dart';
+import 'package:lattice_reports/lattice_http_overrides.dart';
 import 'package:preflection/preflection.dart';
 
 class LatticeReportsConfiguration {
@@ -29,6 +32,8 @@ class LatticeReportsConfiguration {
       required PreflectorFactory preflectorFactory,
       required ObjectFactory logicRegistry,
       LatticeReportStrings? customStrings}) async {
+    HttpOverrides.global = LatticeHttpOverrides();
+
     LoggerWrapper().configure(i: i, v: v, e: e);
     LatticeReportsConfiguration.environmentInformation = environmentInfo;
     LatticeReportsConfiguration._strings =
