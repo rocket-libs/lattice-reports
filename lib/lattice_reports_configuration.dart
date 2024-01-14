@@ -13,6 +13,7 @@ import 'package:lattice_reports/Logging/logger_wrapper.dart';
 import 'package:lattice_reports/QuickOverview/Blocstar/quick_overview_logic.dart';
 import 'package:lattice_reports/SalesList/Blocstar/sales_list_logic.dart';
 import 'package:lattice_reports/Strings/strings.dart';
+import 'package:lattice_reports/Theming/theming.dart';
 import 'package:lattice_reports/VendorLocations/Data/vendor_location_model.dart';
 import 'package:lattice_reports/VendorProfiles/Data/vendor_profile_model.dart';
 import 'package:lattice_reports/lattice_http_overrides.dart';
@@ -22,10 +23,13 @@ class LatticeReportsConfiguration {
   static EnvironmentInformation? environmentInformation;
   static LatticeReportStrings? _strings;
   static LatticeReportIcons? _icons;
+  static Theming? _theming;
 
   static LatticeReportStrings get strings => _strings ?? LatticeReportStrings();
 
   static LatticeReportIcons get icons => _icons ?? LatticeReportIcons();
+
+  static Theming get theming => _theming ?? Theming();
 
   Future configureAsync(
       {required EnvironmentInformation environmentInfo,
@@ -37,7 +41,8 @@ class LatticeReportsConfiguration {
       required PreflectorFactory preflectorFactory,
       required ObjectFactory logicRegistry,
       LatticeReportStrings? customStrings,
-      LatticeReportIcons? customIcons}) async {
+      LatticeReportIcons? customIcons,
+      Theming? theming}) async {
     HttpOverrides.global = LatticeHttpOverrides();
 
     LoggerWrapper().configure(i: i, v: v, e: e);
@@ -45,6 +50,7 @@ class LatticeReportsConfiguration {
     LatticeReportsConfiguration._strings =
         customStrings ?? LatticeReportStrings();
     LatticeReportsConfiguration._icons = customIcons ?? LatticeReportIcons();
+    LatticeReportsConfiguration._theming = theming ?? Theming();
     ApplicationInformationMessenger()
         .configure(applicationInformation: applicationInfo);
 
