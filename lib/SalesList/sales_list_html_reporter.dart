@@ -18,6 +18,8 @@ class SalesListHtmlReporter {
   final Function(bool busy) onBusyStateChanged;
   final Function(String html)? onHtmlChanged;
   String _currentHtml = "";
+  ReportArgumentModel _reportArgumentModel = ReportArgumentModel(
+      dateOne: DateTime.now(), dateTwo: DateTime.now(), vendorLocations: []);
 
   SalesListHtmlReporter({this.onHtmlChanged, required this.onBusyStateChanged});
 
@@ -31,6 +33,8 @@ class SalesListHtmlReporter {
       return value;
     }
   }
+
+  ReportArgumentModel get reportArgumentModel => _reportArgumentModel;
 
   Future<File?> getFileAsync() async {
     if (_currentHtml.isEmpty) {
@@ -105,6 +109,7 @@ class SalesListHtmlReporter {
 
   Future<String> getHtml(
       {required ReportArgumentModel reportArgumentModel}) async {
+    _reportArgumentModel = reportArgumentModel;
     final cssBuilder = CssBuilder();
     final sales = await fetchAsync(reportArgumentModel: reportArgumentModel);
     await VendorProfileMessenger().refreshAsync();
