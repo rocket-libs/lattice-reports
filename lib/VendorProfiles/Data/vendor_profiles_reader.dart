@@ -1,5 +1,6 @@
 import 'package:lattice_reports/Authentication/Messaging/authentication_messenger.dart';
 import 'package:lattice_reports/Dataflow/endpoint_caller.dart';
+import 'package:lattice_reports/Logging/logger_wrapper.dart';
 import 'package:lattice_reports/VendorProfiles/Data/vendor_profile_model.dart';
 import 'package:preflection/Preflectable.dart';
 import 'package:preflection/Serializer.dart';
@@ -22,6 +23,7 @@ class VendorProfilesReader {
     final mapResult = await apiCaller.getAsync(
         '${_apiBaseRoute}get-by-id?vendorId=$userProfileId&includeArchived=true',
         offlineDisplayLabel: null);
+    LoggerWrapper().i(mapResult);
     final vendorProfileModel = Serializer.deserializeSingle<TResult>(mapResult);
     return [vendorProfileModel as TResult];
   }
