@@ -151,7 +151,7 @@ class SalesListHtmlReporter {
         .addToClass("tr:nth-child(even)", "background-color: #eee;")
         .addToClass("tr:nth-child(odd)", "background-color: #fff;")
         .addToClass("tr:hover", "background-color: #ccc;")
-        .addToClass("th", "background-color: #4CAF50; color: white;")
+        .addToClass("th", "background-color: $primaryColor; color: white;")
         .addToClass(".format-number", "text-align: right;")
         .addToClass(".grand-total",
             "font-weight: bold; text-align: right; font-size: 20px;")
