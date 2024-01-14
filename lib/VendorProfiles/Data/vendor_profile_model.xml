@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VendorProfileModel>
+    <props>
+        <vendorId type="Guid" />
+        <description type="String" />
+        <displayLabel type="String" />
+        <coverPhotoFilename type="String" />        
+    </props>
+</VendorProfileModel>

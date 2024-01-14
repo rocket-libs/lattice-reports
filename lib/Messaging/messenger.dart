@@ -13,6 +13,13 @@ abstract class Messenger<TModel> {
     _notifyListeners();
   }
 
+  TModel getSingleOrDefault({required TModel defaultValue}) {
+    if (_items.isEmpty) {
+      return defaultValue;
+    }
+    return _items.single;
+  }
+
   setUntypedItems(List<dynamic> value) {
     many = value.cast<TModel>().toList();
   }

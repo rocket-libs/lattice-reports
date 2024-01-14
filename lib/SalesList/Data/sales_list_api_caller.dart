@@ -20,16 +20,20 @@ class SalesListApiCaller {
   Future<List<OrderDataPointModel>> getByArbitraryDatesAsync(
       {required dateOne,
       required dateTwo,
-      List<String>? vendorLocationIds}) async {
+      List<String>? vendorLocationIds,
+      bool aggregateSingleDayData = false}) async {
     final endpointCaller = EndpointCaller.lattice();
-    final dateOneString = (dateOne as DateTime?).toDDDashMMMDashYYYY();
+    final dateOneString = (dateOne as DateTime?).toYYYYDashMMDashDD();
     final datetTwoString = (dateTwo as DateTime?).toYYYYDashMMDashDD();
 
     final vendorLocationIdsQuery = vendorLocationIds.toNonNullList().isNotEmpty
         ? "&vendorLocationIds=${vendorLocationIds?.toList().join("&vendorLocationIds=")}"
         : "";
+
+    final singleDayDataAggregateQuery =
+        aggregateSingleDayData ? "&aggregateSingleDayData=true" : "";
     final response = await endpointCaller.getAsync<List<dynamic>>(
-        "v1/OrderDataPoints/get-sales-by-arbitrary-dates?dateOne=$dateOneString&dateTwo=$datetTwoString$vendorLocationIdsQuery");
+        "v1/OrderDataPoints/get-sales-by-arbitrary-dates?dateOne=$dateOneString&dateTwo=$datetTwoString$vendorLocationIdsQuery$singleDayDataAggregateQuery");
 
     final result = Serializer.deserializeMany<OrderDataPointModel>(response);
     return result.toNonNullList();

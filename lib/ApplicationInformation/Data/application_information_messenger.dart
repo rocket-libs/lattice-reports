@@ -22,7 +22,8 @@ class ApplicationInformationMessenger
       return ApplicationInformation(
           applicationName: "...",
           applicationVersion: "0.0.0",
-          buildNumber: "0");
+          buildNumber: "0",
+          downloadUrl: "");
     } else {
       return many.first;
     }
