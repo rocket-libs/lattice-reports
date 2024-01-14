@@ -14,6 +14,7 @@ import 'package:lattice_reports/QuickOverview/Blocstar/quick_overview_logic.dart
 import 'package:lattice_reports/SalesList/Blocstar/sales_list_logic.dart';
 import 'package:lattice_reports/Strings/strings.dart';
 import 'package:lattice_reports/VendorLocations/Data/vendor_location_model.dart';
+import 'package:lattice_reports/VendorProfiles/Data/vendor_profile_model.dart';
 import 'package:lattice_reports/lattice_http_overrides.dart';
 import 'package:preflection/preflection.dart';
 
@@ -50,7 +51,8 @@ class LatticeReportsConfiguration {
     preflectorFactory
       ..addCreator(() => VendorLocationModel())
       ..addCreator(() => OrderDataPointModel())
-      ..addCreator(() => LocationModel());
+      ..addCreator(() => LocationModel())
+      ..addCreator(() => VendorProfileModel());
 
     logicRegistry
       ..registerImplicit(() => SalesListLogic())
