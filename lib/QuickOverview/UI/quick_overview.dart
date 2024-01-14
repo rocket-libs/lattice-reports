@@ -129,15 +129,25 @@ class _QuickOverviewState
     ];
   }
 
-  bool get _isLargeScreen {
-    return MediaQuery.of(context).size.width > 600;
-  }
+  bool get _hasLargeWidth => isLandScapeMode && isLargeScreen;
 
   @override
   Widget buildRootWidget(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(strings.quickOverview),
+        actions: [
+          IconButton(
+              icon: Icon(LatticeReportsConfiguration.icons.rotateScreen),
+              onPressed: () {
+                rotateScreen();
+              }),
+          IconButton(
+              icon: Icon(LatticeReportsConfiguration.icons.home),
+              onPressed: () {
+                popToRoot();
+              })
+        ],
       ),
       body: WithProgress(
         showProgress: isBusy,
@@ -156,7 +166,7 @@ class _QuickOverviewState
               canChangeVendorLocations: () => Future.value(true),
             ),
             body: GridView.count(
-              crossAxisCount: _isLargeScreen ? 4 : 2,
+              crossAxisCount: _hasLargeWidth ? 4 : 2,
               mainAxisSpacing: 5,
               crossAxisSpacing: 5,
               children: [
