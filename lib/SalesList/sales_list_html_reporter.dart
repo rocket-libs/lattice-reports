@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:flutter_guid/flutter_guid.dart';
 import 'package:lattice_reports/ApplicationInformation/Data/application_information_messenger.dart';
 import 'package:lattice_reports/Data/order_data_point_model.dart';
