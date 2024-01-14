@@ -13,14 +13,13 @@ import 'package:lattice_reports/VendorProfiles/Data/vendor_profile_model.dart';
 import 'package:lattice_reports/VendorProfiles/Messaging/vendor_profile_messenger.dart';
 import 'package:lattice_reports/lattice_reports_configuration.dart';
 
-class SalesListHtmlGenerator {
+class SalesListHtmlReporter {
   final _strings = LatticeReportsConfiguration.strings;
   final Function(bool busy) onBusyStateChanged;
   final Function(String html)? onHtmlChanged;
   String _currentHtml = "";
 
-  SalesListHtmlGenerator(
-      {this.onHtmlChanged, required this.onBusyStateChanged});
+  SalesListHtmlReporter({this.onHtmlChanged, required this.onBusyStateChanged});
 
   // This is only here for legacy reasons. We can't remove it as some of the older data need to be cleaned up.
   String _getPrettyLabel({required String value}) {
