@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:lattice_reports/ApplicationInformation/Data/application_information_messenger.dart';
-import 'package:lattice_reports/Data/order_data_point_model.dart';
 import 'package:lattice_reports/NonNullable/non_nullable_extensions.dart';
 import 'package:lattice_reports/VendorProfiles/Data/vendor_profile_model.dart';
 import 'package:lattice_reports/VendorProfiles/Messaging/vendor_profile_messenger.dart';
@@ -15,8 +14,8 @@ class ReportTemplatingConfigurator {
   final bool Function() webViewReadyToTriggerJson;
   final String reportTitle;
   final Function() runReportAsync;
-  final List<List<OrderDataPointModel>> Function() getFilteredData;
-  final Map<String, dynamic> Function(Object item) convertItemToMap;
+  final List<dynamic> Function() getFilteredData;
+  final Map<String, dynamic> Function(dynamic item) convertItemToMap;
 
   bool _modelingData = false;
 
