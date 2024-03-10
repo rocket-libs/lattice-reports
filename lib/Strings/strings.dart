@@ -24,4 +24,7 @@ class LatticeReportStrings {
   String discountsTodayVsYesterday = "Discounts Today vs Yesterday";
   String quickOverview = "Quick Overview";
   String revenueList = "Revenue List";
+  String selectPaymentMethods = "Select Payment Methods";
+  String all = "All";
+  String paymentMethods = "paymentMethods";
 }
