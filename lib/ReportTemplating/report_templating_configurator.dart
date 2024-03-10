@@ -5,7 +5,6 @@ import 'package:lattice_reports/ApplicationInformation/Data/application_informat
 import 'package:lattice_reports/NonNullable/non_nullable_extensions.dart';
 import 'package:lattice_reports/VendorProfiles/Data/vendor_profile_model.dart';
 import 'package:lattice_reports/VendorProfiles/Messaging/vendor_profile_messenger.dart';
-import 'package:lattice_reports/WebviewHelpers/navigation_delegate_wrapper.dart';
 import 'package:lattice_reports/WebviewHelpers/web_view_controller_wrapper.dart';
 
 class ReportTemplatingConfigurator {
@@ -43,14 +42,11 @@ class ReportTemplatingConfigurator {
     webViewControllerWrapper
       ..setJavaScriptModeUnRestricted()
       ..setBackgroundColor(Colors.white)
-      ..addJavaScriptChannel(_jsChannel, onMessageReceived: (_) {})
-      ..setNavigationDelegate(
-        NavigationDelegateWrapper(
-          onPageFinished: (url) {
-            _triggerJson();
-          },
-        ),
-      );
+      ..addJavaScriptChannel(_jsChannel, onMessageReceived: (_) {});
+  }
+
+  onPageFinishedAsync() async {
+    await _triggerJson();
   }
 
   _triggerJson() async {
