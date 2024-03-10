@@ -55,10 +55,10 @@ class ReportTemplating {
       String? cssPath,
       required String cssPlaceholder}) async {
     if (cssPath != null) {
-      final css = await assetBundle.loadString(cssPath);
+      String css = await assetBundle.loadString(cssPath);
       final primaryColor = _getHtmlColorCode(
           flutterColor: LatticeReportsConfiguration.theming.primaryColor);
-      css.replaceAllMapped(RegExp(r'--primary-color\s*:\s*#000\s*;'),
+      css = css.replaceAllMapped(RegExp(r'--primary-color\s*:\s*#000\s*;'),
           (match) => '--primary-color: #$primaryColor;');
       template = template.replaceAll(cssPlaceholder, css);
     }

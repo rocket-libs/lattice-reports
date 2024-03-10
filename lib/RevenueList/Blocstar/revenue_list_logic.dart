@@ -66,7 +66,7 @@ class RevenueListLogic extends ReportLogicBase<RevenueListContext> {
       return context.orderDataPointModels;
     }
     return context.orderDataPointModels.where((element) {
-      final isContained =
+      final isContained = element.lineTotal.valueOrDefault() > 0 &&
           context.selectedPaymentMethods.contains(element.methodOfPayment);
       return isContained;
     }).toList();
