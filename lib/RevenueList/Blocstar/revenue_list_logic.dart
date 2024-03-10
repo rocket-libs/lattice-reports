@@ -48,7 +48,9 @@ class RevenueListLogic extends ReportLogicBase<RevenueListContext> {
         final paymentMethods =
             results.map((e) => e.methodOfPayment.valueOrDefault()).toSet();
         context.merge(
-            newOrderDataPointModels: results,
+            newOrderDataPointModels: results
+                .where((element) => _amountIsGreaterThanZero(element))
+                .toList(),
             newPaymentMethods: paymentMethods);
       });
     } finally {
@@ -66,9 +68,19 @@ class RevenueListLogic extends ReportLogicBase<RevenueListContext> {
       return context.orderDataPointModels;
     }
     return context.orderDataPointModels.where((element) {
-      final isContained = element.lineTotal.valueOrDefault() > 0 &&
+      final isContained =
           context.selectedPaymentMethods.contains(element.methodOfPayment);
       return isContained;
     }).toList();
+  }
+
+  bool _amountIsGreaterThanZero(OrderDataPointModel? element) {
+    if (element == null) {
+      return false;
+    } else {
+      return element.quantity.valueOrDefault() *
+              element.value.valueOrDefault() >
+          0;
+    }
   }
 }
