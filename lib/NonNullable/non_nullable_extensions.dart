@@ -179,6 +179,18 @@ extension NullableDateTimes on DateTime? {
     return "${date.day}_${_getMonthAbbreviation(date.month)}_${date.year} ${date.hour}_${date.minute.toString().padLeft(2, '0')}_${date.second.toString().padLeft(2, '0')}";
   }
 
+  String toHHMMSSAMPM() {
+    final date = valueOrDefault();
+    final hour = date.hour;
+    final minutes = date.minute;
+    final seconds = date.second;
+    final isAM = hour < 12;
+    final hour12 = hour % 12;
+    final hour12String = hour12.toString().padLeft(2, '0');
+    final ampm = isAM ? "AM" : "PM";
+    return "$hour12String:${minutes.toString().padLeft(2, '0')}:${seconds.toString().padLeft(2, '0')} $ampm";
+  }
+
   String toDDDashMMMDashYYYYHHMM() {
     final date = valueOrDefault();
     final hour = date.hour;

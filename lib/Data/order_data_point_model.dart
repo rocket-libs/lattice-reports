@@ -1,7 +1,5 @@
 // Auto generated file, change at risk of code getting overwritten later
 
-// ignore_for_file: prefer_null_aware_operators
-
 import 'package:flutter_guid/flutter_guid.dart';
 import 'package:lattice_reports/Dataflow/model.dart';
 import 'package:preflection/MapReader.dart';
@@ -20,6 +18,7 @@ class OrderDataPointModel extends Model<OrderDataPointModel> {
   final Guid? aggregatorId;
   final int? unAggregatedItemsCount;
   final String? phoneNumber;
+  final String? orderNumber;
 
   OrderDataPointModel(
       {Guid? id,
@@ -34,7 +33,8 @@ class OrderDataPointModel extends Model<OrderDataPointModel> {
       this.methodOfPayment,
       this.aggregatorId,
       this.unAggregatedItemsCount,
-      this.phoneNumber}) {
+      this.phoneNumber,
+      this.orderNumber}) {
     this.id = id;
   }
 
@@ -51,7 +51,8 @@ class OrderDataPointModel extends Model<OrderDataPointModel> {
       String? newMethodOfPayment,
       Guid? newAggregatorId,
       int? newUnAggregatedItemsCount,
-      String? newPhoneNumber}) {
+      String? newPhoneNumber,
+      String? newOrderNumber}) {
     return OrderDataPointModel(
         dated: resolveValue(dated, newDated),
         orderHeaderId: resolveValue(orderHeaderId, newOrderHeaderId),
@@ -66,6 +67,7 @@ class OrderDataPointModel extends Model<OrderDataPointModel> {
         unAggregatedItemsCount:
             resolveValue(unAggregatedItemsCount, newUnAggregatedItemsCount),
         phoneNumber: resolveValue(phoneNumber, newPhoneNumber),
+        orderNumber: resolveValue(orderNumber, newOrderNumber),
         id: id);
   }
 
@@ -86,6 +88,8 @@ class OrderDataPointModel extends Model<OrderDataPointModel> {
       unAggregatedItemsCount:
           mapReader.read<int>(_FieldNames.unAggregatedItemsCount),
       phoneNumber: mapReader.read<String>(_FieldNames.phoneNumber),
+      orderNumber: mapReader.read<String>(_FieldNames.orderNumber,
+          valueIfKeyMissing: ""),
       id: mapReader.read<Guid>(idFieldName,
           valueIfKeyMissing: Guid.defaultValue),
     );
@@ -94,7 +98,7 @@ class OrderDataPointModel extends Model<OrderDataPointModel> {
   @override
   Map<String, dynamic> toJson() {
     return {
-      _FieldNames.dated: dated != null ? dated!.toIso8601String() : null,
+      _FieldNames.dated: dated?.toIso8601String(),
       _FieldNames.orderHeaderId: orderHeaderId != null
           ? orderHeaderId?.value
           : Guid.defaultValue.value,
@@ -111,6 +115,7 @@ class OrderDataPointModel extends Model<OrderDataPointModel> {
           aggregatorId != null ? aggregatorId?.value : Guid.defaultValue.value,
       _FieldNames.unAggregatedItemsCount: unAggregatedItemsCount,
       _FieldNames.phoneNumber: phoneNumber,
+      _FieldNames.orderNumber: orderNumber,
       idFieldName: id != null ? id!.value : Guid.defaultValue.value,
     };
   }
@@ -129,4 +134,5 @@ class _FieldNames {
   static const String aggregatorId = "aggregatorId";
   static const String unAggregatedItemsCount = "unAggregatedItemsCount";
   static const String phoneNumber = "phoneNumber";
+  static const String orderNumber = "orderNumber";
 }

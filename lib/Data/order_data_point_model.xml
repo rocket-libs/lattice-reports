@@ -13,5 +13,6 @@
         <aggregatorId type="Guid" />
         <unAggregatedItemsCount type="int" />
         <phoneNumber type="String" />
+        <orderNumber type="String" />
     </props>
 </OrderDataPointModel>
