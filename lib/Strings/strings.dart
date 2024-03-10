@@ -26,5 +26,5 @@ class LatticeReportStrings {
   String revenueList = "Revenue List";
   String selectPaymentMethods = "Select Payment Methods";
   String all = "All";
-  String paymentMethods = "paymentMethods";
+  String paymentMethods = "Payment Methods";
 }
