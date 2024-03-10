@@ -59,7 +59,7 @@ class ReportTemplating {
       final primaryColor = _getHtmlColorCode(
           flutterColor: LatticeReportsConfiguration.theming.primaryColor);
       css = css.replaceAllMapped(RegExp(r'--primary-color\s*:\s*#000\s*;'),
-          (match) => '--primary-color: #$primaryColor;');
+          (match) => '--primary-color: $primaryColor;');
       template = template.replaceAll(cssPlaceholder, css);
     }
     return template;
