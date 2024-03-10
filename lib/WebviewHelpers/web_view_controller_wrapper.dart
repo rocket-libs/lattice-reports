@@ -9,9 +9,11 @@ class WebViewControllerWrapper {
   final Function(NavigationDelegateWrapper delegate) setNavigationDelegate;
   final Function(String javaScript) runJavaScriptAsync;
   final Function(String html) loadHtmlStringAsync;
+  final Function() onPageFinished;
 
   WebViewControllerWrapper(
-      {required this.loadHtmlStringAsync,
+      {required this.onPageFinished,
+      required this.loadHtmlStringAsync,
       required this.runJavaScriptAsync,
       required this.setNavigationDelegate,
       required this.setJavaScriptModeUnRestricted,
