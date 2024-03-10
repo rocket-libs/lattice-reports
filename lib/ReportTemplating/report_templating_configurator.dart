@@ -16,7 +16,7 @@ class ReportTemplatingConfigurator {
   final String reportTitle;
   final Function() runReportAsync;
   final List<List<OrderDataPointModel>> Function() getFilteredData;
-  final Map<String, dynamic> Function<T>(T item) convertItemToMap;
+  final Map<String, dynamic> Function(Object item) convertItemToMap;
 
   bool _modelingData = false;
 
