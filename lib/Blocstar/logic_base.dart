@@ -12,6 +12,4 @@ abstract class LogicBase<TBlocstarLogicBaseContext extends BlocstarContextBase>
   Future initializeAsync() async {
     await onInitializedAsync();
   }
-
-  Future runReportAsync();
 }

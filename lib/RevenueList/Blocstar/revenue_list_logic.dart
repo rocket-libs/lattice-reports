@@ -1,5 +1,5 @@
 import 'package:flutter_guid/flutter_guid.dart';
-import 'package:lattice_reports/Blocstar/logic_base.dart';
+import 'package:lattice_reports/Blocstar/report_logic_base.dart';
 import 'package:lattice_reports/Data/order_data_point_model.dart';
 import 'package:lattice_reports/Data/report_argument_model.dart';
 import 'package:lattice_reports/NonNullable/non_nullable_extensions.dart';
@@ -8,7 +8,7 @@ import 'package:lattice_reports/RevenueList/Data/revenue_api_caller.dart';
 import 'package:lattice_reports/VendorProfiles/Data/vendor_profile_model.dart';
 import 'package:lattice_reports/VendorProfiles/Messaging/vendor_profile_messenger.dart';
 
-class RevenueListLogic extends LogicBase<RevenueListContext> {
+class RevenueListLogic extends ReportLogicBase<RevenueListContext> {
   bool _fetchingData = false;
   @override
   Future initializeAsync() async {
