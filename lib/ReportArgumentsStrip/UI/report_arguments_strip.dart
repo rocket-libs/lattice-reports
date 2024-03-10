@@ -14,6 +14,7 @@ class ReportArgumentsStrip extends StatefulWidget {
   final Function(ReportArgumentModel reportArgumentModel) onRunReport;
   final Function(bool visible) onDialogVisibilityChanged;
   final ReportArgumentsStripPermissions permissions;
+  final Widget? customArguments;
 
   final bool canRunReport;
 
@@ -24,7 +25,8 @@ class ReportArgumentsStrip extends StatefulWidget {
       required this.onRunReport,
       required this.canRunReport,
       required this.onDialogVisibilityChanged,
-      required this.permissions});
+      required this.permissions,
+      this.customArguments});
   @override
   State<StatefulWidget> createState() {
     return _ReportArgumentsStripState();
@@ -218,6 +220,7 @@ class _ReportArgumentsStripState extends State<ReportArgumentsStrip> {
                   return await widget.permissions.canChangeVendorLocations();
                 },
               ),
+              widget.customArguments ?? Container(),
               // Container(
               //   margin: const EdgeInsets.only(top: 10),
               //   child: Row(

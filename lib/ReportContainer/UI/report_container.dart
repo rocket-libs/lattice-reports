@@ -13,6 +13,7 @@ class ReportContainer extends StatefulWidget {
   final Future<void> Function() onRunReport;
   final Function(ReportArgumentModel) onReportArgumentModelChanged;
   final Function(bool) onDialogVisibilityChanged;
+  final Widget? customArguments;
 
   const ReportContainer(
       {super.key,
@@ -23,7 +24,8 @@ class ReportContainer extends StatefulWidget {
       required this.onRunReport,
       required this.onReportArgumentModelChanged,
       required this.onDialogVisibilityChanged,
-      this.header});
+      this.header,
+      this.customArguments});
   @override
   State<StatefulWidget> createState() {
     return _ReportContainerState();
@@ -71,6 +73,7 @@ class _ReportContainerState extends State<ReportContainer> {
             widget.onReportArgumentModelChanged(reportArgs);
             await widget.onRunReport();
           },
+          customArguments: widget.customArguments ?? Container(),
         ),
         widget.header ?? Container(),
         // Scrollable content
