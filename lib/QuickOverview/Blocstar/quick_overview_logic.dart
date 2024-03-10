@@ -236,4 +236,10 @@ class QuickOverviewLogic extends LogicBase<QuickOverviewContext> {
     final idsSet = dataset.map((e) => e.phoneNumber.valueOrDefault()).toSet();
     return idsSet.length;
   }
+
+  @override
+  Future runReportAsync() {
+    // TODO: implement runReportAsync
+    throw UnimplementedError();
+  }
 }
