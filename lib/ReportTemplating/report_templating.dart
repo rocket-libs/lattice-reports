@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:lattice_reports/DateFormatting/custom_date_formatting.dart';
+import 'package:lattice_reports/lattice_reports_configuration.dart';
 
 class ReportTemplating {
   Future<String> getReportHtmlAsync({
@@ -33,6 +34,21 @@ class ReportTemplating {
     return await _saveToFileAsync(html: html, fileName: fileName);
   }
 
+  String _getHtmlColorCode({required Color flutterColor}) {
+    int red = flutterColor.red;
+    int green = flutterColor.green;
+    int blue = flutterColor.blue;
+
+    // Converting the values to hexadecimal
+    String hexRed = red.toRadixString(16).padLeft(2, '0');
+    String hexGreen = green.toRadixString(16).padLeft(2, '0');
+    String hexBlue = blue.toRadixString(16).padLeft(2, '0');
+
+    // Combining the hexadecimal values to get the HTML color code
+    String htmlColorCode = '#$hexRed$hexGreen$hexBlue';
+    return htmlColorCode;
+  }
+
   Future<String> _injectCss(
       {required String template,
       required AssetBundle assetBundle,
@@ -40,6 +56,10 @@ class ReportTemplating {
       required String cssPlaceholder}) async {
     if (cssPath != null) {
       final css = await assetBundle.loadString(cssPath);
+      final primaryColor = _getHtmlColorCode(
+          flutterColor: LatticeReportsConfiguration.theming.primaryColor);
+      css.replaceAllMapped(RegExp(r'--primary-color\s*:\s*#000\s*;'),
+          (match) => '--primary-color: #$primaryColor;');
       template = template.replaceAll(cssPlaceholder, css);
     }
     return template;
