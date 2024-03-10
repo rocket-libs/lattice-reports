@@ -11,6 +11,7 @@ import 'package:lattice_reports/Icons/lattice_report_icons.dart';
 import 'package:lattice_reports/Locations/Data/location_model.dart';
 import 'package:lattice_reports/Logging/logger_wrapper.dart';
 import 'package:lattice_reports/QuickOverview/Blocstar/quick_overview_logic.dart';
+import 'package:lattice_reports/RevenueList/Blocstar/revenue_list_logic.dart';
 import 'package:lattice_reports/SalesList/Blocstar/sales_list_logic.dart';
 import 'package:lattice_reports/Strings/strings.dart';
 import 'package:lattice_reports/Theming/theming.dart';
@@ -62,7 +63,8 @@ class LatticeReportsConfiguration {
 
     logicRegistry
       ..registerImplicit(() => SalesListLogic())
-      ..registerImplicit(() => QuickOverviewLogic());
+      ..registerImplicit(() => QuickOverviewLogic())
+      ..registerImplicit(() => RevenueListLogic());
 
     await AuthenticationMessenger()
         .configureAsync(authenticationInformation: authenticationInfo);
