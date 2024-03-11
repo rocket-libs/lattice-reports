@@ -4,8 +4,11 @@ import 'package:lattice_reports/ReportTemplating/report_templating_configurator.
 
 class RevenueListHtmlReporter {
   final ReportTemplatingConfigurator reportTemplatingConfigurator;
+  final String Function() getTemplatePath;
 
-  RevenueListHtmlReporter({required this.reportTemplatingConfigurator});
+  RevenueListHtmlReporter(
+      {required this.getTemplatePath,
+      required this.reportTemplatingConfigurator});
 
   Future updateReportAsync({required AssetBundle rootBundle}) async {
     final html = await _getHtmlAsync(rootBundle);
@@ -15,7 +18,7 @@ class RevenueListHtmlReporter {
   }
 
   Future<String> _getHtmlAsync(AssetBundle rootBundle) async {
-    const templatePath = "assets/reports/revenue/revenue_list_single_day.html";
+    final templatePath = getTemplatePath();
     const cssPath = "assets/reports/reports.css";
     const jsPath = "assets/reports/reports.js";
     return await ReportTemplating().getReportHtmlAsync(
