@@ -43,7 +43,8 @@ class RevenueListLogic extends ReportLogicBase<RevenueListContext> {
         final revenueApiCaller = RevenueApiCaller();
         final results =
             await revenueApiCaller.getByArbitraryDatesWithModelAsync(
-                reportArgumentModel: context.reportArgumentModel);
+                reportArgumentModel: context.reportArgumentModel,
+                aggregateSingleDayData: showingMultipleDates);
 
         final paymentMethods =
             results.map((e) => e.methodOfPayment.valueOrDefault()).toSet();
