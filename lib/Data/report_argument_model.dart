@@ -21,6 +21,8 @@ class ReportArgumentModel {
     return vendorLocationDescriptions;
   }
 
+  bool get isSameDay => _isSameDay(dateOne, dateTwo);
+
   String get dateDescription {
     if (dateOne.isAfter(dateTwo)) {
       final temp = dateOne;
