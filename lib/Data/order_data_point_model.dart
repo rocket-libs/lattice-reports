@@ -19,6 +19,8 @@ class OrderDataPointModel extends Model<OrderDataPointModel> {
   final int? unAggregatedItemsCount;
   final String? phoneNumber;
   final String? orderNumber;
+  final String? customerName;
+  final String? accountNumber;
 
   OrderDataPointModel(
       {Guid? id,
@@ -34,7 +36,9 @@ class OrderDataPointModel extends Model<OrderDataPointModel> {
       this.aggregatorId,
       this.unAggregatedItemsCount,
       this.phoneNumber,
-      this.orderNumber}) {
+      this.orderNumber,
+      this.customerName,
+      this.accountNumber}) {
     this.id = id;
   }
 
@@ -52,7 +56,9 @@ class OrderDataPointModel extends Model<OrderDataPointModel> {
       Guid? newAggregatorId,
       int? newUnAggregatedItemsCount,
       String? newPhoneNumber,
-      String? newOrderNumber}) {
+      String? newOrderNumber,
+      String? newCustomerName,
+      String? newAccountNumber}) {
     return OrderDataPointModel(
         dated: resolveValue(dated, newDated),
         orderHeaderId: resolveValue(orderHeaderId, newOrderHeaderId),
@@ -68,6 +74,8 @@ class OrderDataPointModel extends Model<OrderDataPointModel> {
             resolveValue(unAggregatedItemsCount, newUnAggregatedItemsCount),
         phoneNumber: resolveValue(phoneNumber, newPhoneNumber),
         orderNumber: resolveValue(orderNumber, newOrderNumber),
+        customerName: resolveValue(customerName, newCustomerName),
+        accountNumber: resolveValue(accountNumber, newAccountNumber),
         id: id);
   }
 
@@ -89,6 +97,10 @@ class OrderDataPointModel extends Model<OrderDataPointModel> {
           mapReader.read<int>(_FieldNames.unAggregatedItemsCount),
       phoneNumber: mapReader.read<String>(_FieldNames.phoneNumber),
       orderNumber: mapReader.read<String>(_FieldNames.orderNumber,
+          valueIfKeyMissing: ""),
+      customerName: mapReader.read<String>(_FieldNames.customerName,
+          valueIfKeyMissing: ""),
+      accountNumber: mapReader.read<String>(_FieldNames.accountNumber,
           valueIfKeyMissing: ""),
       id: mapReader.read<Guid>(idFieldName,
           valueIfKeyMissing: Guid.defaultValue),
@@ -116,6 +128,8 @@ class OrderDataPointModel extends Model<OrderDataPointModel> {
       _FieldNames.unAggregatedItemsCount: unAggregatedItemsCount,
       _FieldNames.phoneNumber: phoneNumber,
       _FieldNames.orderNumber: orderNumber,
+      _FieldNames.customerName: customerName,
+      _FieldNames.accountNumber: accountNumber,
       idFieldName: id != null ? id!.value : Guid.defaultValue.value,
     };
   }
@@ -135,4 +149,6 @@ class _FieldNames {
   static const String unAggregatedItemsCount = "unAggregatedItemsCount";
   static const String phoneNumber = "phoneNumber";
   static const String orderNumber = "orderNumber";
+  static const String customerName = "customerName";
+  static const String accountNumber = "accountNumber";
 }

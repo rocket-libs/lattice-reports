@@ -14,5 +14,7 @@
         <unAggregatedItemsCount type="int" />
         <phoneNumber type="String" />
         <orderNumber type="String" />
+        <customerName type="String" />
+        <accountNumber type="String" />
     </props>
 </OrderDataPointModel>
