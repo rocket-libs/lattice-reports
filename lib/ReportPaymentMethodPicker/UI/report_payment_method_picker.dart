@@ -57,11 +57,11 @@ class _ReportPaymentMethodPickerState extends State<ReportPaymentMethodPicker> {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        InkWell(
-          onTap: () async {
-            await _showPaymentMethodPicker();
-          },
-          child: Expanded(
+        Expanded(
+          child: InkWell(
+            onTap: () async {
+              await _showPaymentMethodPicker();
+            },
             child: Text(
               "${strings.paymentMethods}: $_description",
               style: const TextStyle(color: Colors.blue),
