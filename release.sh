@@ -4,8 +4,8 @@ git pull
 git push
 flutter test
 latest_tag=$(git describe --tags --abbrev=0)
-echo "-----------------\n"
-echo "Latest tag:\n"
+echo "-----------------"
+echo "Latest tag:"
 echo "$latest_tag"
-echo "-----------------\n"
+echo "-----------------"
 mario gitflow/instant-release
