@@ -61,8 +61,7 @@ class _ReportPaymentMethodPickerState extends State<ReportPaymentMethodPicker> {
           onTap: () async {
             await _showPaymentMethodPicker();
           },
-          child: SizedBox(
-            width: MediaQuery.of(context).size.width,
+          child: Expanded(
             child: Text(
               "${strings.paymentMethods}: $_description",
               style: const TextStyle(color: Colors.blue),
