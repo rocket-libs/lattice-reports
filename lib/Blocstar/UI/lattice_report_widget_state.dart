@@ -6,7 +6,7 @@ import 'package:flutter/services.dart';
 import '../logic_base.dart';
 import 'blocstar_widget_state.dart';
 
-abstract class WidgetState<TWidget extends StatefulWidget,
+abstract class LatticeReportWidgetState<TWidget extends StatefulWidget,
         TLogic extends LogicBase<BlocstarContextBase>>
     extends BlocStarWidgetState<TWidget, TLogic> {
   bool isBusy = false;

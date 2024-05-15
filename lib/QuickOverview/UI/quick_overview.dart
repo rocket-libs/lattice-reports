@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:lattice_reports/Blocstar/UI/widget_state.dart';
+import 'package:lattice_reports/Blocstar/UI/lattice_report_widget_state.dart';
 import 'package:lattice_reports/NonNullable/non_nullable_extensions.dart';
 import 'package:lattice_reports/QuickOverview/UI/quick_overview_stat_card.dart';
 import 'package:lattice_reports/ReportArgumentsStrip/Data/report_arguments_strip_permissions.dart';
@@ -22,7 +22,7 @@ class QuickOverview extends StatefulWidget {
 }
 
 class _QuickOverviewState
-    extends WidgetState<QuickOverview, QuickOverviewLogic> {
+    extends LatticeReportWidgetState<QuickOverview, QuickOverviewLogic> {
   final strings = LatticeReportsConfiguration.strings;
 
   List<Widget> get _customerStats {
